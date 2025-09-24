@@ -1,0 +1,42 @@
+@import "tailwindcss";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+* {
+  font-family: 'Poppins';
+}
+pre {
+  white-space: pre-wrap; 
+  word-wrap: break-word; 
+  overflow-x: auto; 
+}
+
+.gradientBg {
+  background: #d1cfcf;
+  background: linear-gradient(90deg, rgba(209, 207, 207, 1) 0%, rgba(242, 240, 240, 1) 50%, rgba(255, 255, 255, 1) 100%);
+}
+
+.customShadow1 {
+  box-shadow: 0px 0px 22px 1px rgb(205, 205, 205);
+  border: 1px solid lavender;
+}
+
+.limitHeading {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* Number of lines you want */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+
+}
+
+.limitPara {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  /* Number of lines you want */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
