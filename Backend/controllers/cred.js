@@ -36,7 +36,7 @@ export const verifyLogin = async(req,res) => {
         
         const User = await user.find({username:username});
         if(User.length == 0){
-            return res.status(200).json({msg:'User not Existed'})
+            return res.status(500).json({msg:'User not Existed'})
         }
         const isPassword = await bcrypt.compare(password,User[0].password);
         console.log(isPassword); // checking
@@ -44,6 +44,7 @@ export const verifyLogin = async(req,res) => {
         if(isPassword){
             const token = jwt.sign({
                 uname:User[0].username,
+                fullname:User[0].fullname,
                 email:User[0].email
             },process.env.JWT_KEY);
             res.status(200).json({msg:'Login Successful',token:token});

@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import axios from "axios";
+import { Popup } from "./popUp";
+import { useNavigate } from "react-router-dom";
+
 
 
 export function CreateNotes() {
     const [noteHeading, SetTitle] = useState('');
     const [noteContent, SetContent] = useState('');
     const [response,SetResponse] = useState('');
-
+    const [isOpen,SetIsOpen] = useState(false);
+    const navigate = useNavigate();
 
     const sendNote = async () => {
         const token = localStorage.getItem('token');
-
         const res = await axios.post("http://localhost:8080/createNote", 
             {noteHeading,noteContent},
         {
@@ -19,12 +22,16 @@ export function CreateNotes() {
                 Authorization:`Bearer ${token}`
             }
         })
-        
         if(res.status == 200){
             SetResponse('Saved Successfully');
+            SetIsOpen(true);
+        }else{
+            console.log('Error Occured');
         }
 
+
     }
+
 
 
 
@@ -56,7 +63,9 @@ export function CreateNotes() {
 
                 </div>
 
+
                 <div className=" h-[calc(100%-70px)] p-2 overflow-y-auto">
+                    <Popup isOpen={isOpen} onClose={()=>{navigate('/dashboard'); SetIsOpen(false);}} data={response} />
                     <input onChange={(e) => SetTitle(e.target.value)} type="text" className="border outline-gray-300 border-gray-300 border-l-0 border-r-0 mt-2 w-[95%] p-3 text-lg" name="" id="" placeholder="Enter Title" />
 
                     <textarea onChange={(e) => SetContent(e.target.value)} className=" outline-none bg-white w-full p-2 h-[calc(100%-70px)]" name="" id=""></textarea>

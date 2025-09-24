@@ -18,6 +18,10 @@ const noteSchema = new mongoose.Schema(
         noteDate:{
             type:Date,
             default:Date.now
+        },
+        noteBy:{
+            type:String,
+            required:[true,"Uploader name is Mandatory"]
         }
 
     }

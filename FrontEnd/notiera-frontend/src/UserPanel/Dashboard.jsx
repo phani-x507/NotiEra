@@ -8,7 +8,8 @@ export function Dashboard() {
     const [SearchText, SetText] = useState('');
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    console.log(token); //Debug
+    const [notesData,SetnotesData] = useState([]);
+    // console.log(token); //Debug
 
     useEffect(() => {
         const getNotes = async () => {
@@ -20,7 +21,8 @@ export function Dashboard() {
             })
 
             if (res.status == 200) {
-                console.log('Auth Is Successful');
+                const data=res.data.notesData;
+                SetnotesData(data);
             }
 
         }
@@ -29,11 +31,10 @@ export function Dashboard() {
 
     }, [])
 
+    console.log(notesData)
 
 
-
-
-    const SearchedNotes = NotesData.filter((Note) => Note.note_heading.toLowerCase().includes(SearchText.toLowerCase()) || Note.note_content.toLowerCase().includes(SearchText.toLowerCase()));
+    const SearchedNotes = notesData.filter((Note) => Note.noteHeading.toLowerCase().includes(SearchText.toLowerCase()) || Note.noteContent.toLowerCase().includes(SearchText.toLowerCase()));
 
     return (
 
@@ -61,12 +62,12 @@ export function Dashboard() {
 
                             {SearchedNotes.map((note, index) => {
                                 return (
-                                    <button onClick={() => navigate('/view', { state: { id: note.id } })} className="container min-h-[200px] sm:w-[250px] text-left cursor-pointer border border-gray-100 bg-white rounded rounded-xl w-fit p-3 m-1">
-                                        <h1 className="limitHeading"><i class="bi bi-sticky-fill text-blue-500"></i> {note.note_heading}</h1>
+                                    <button onClick={() => navigate('/view', { state: { noteId: note.noteId} })} className="container min-h-[200px] sm:w-[250px] text-left cursor-pointer border border-gray-100 bg-white rounded rounded-xl w-fit p-3 m-1">
+                                        <h1 className="limitHeading"><i class="bi bi-sticky-fill text-blue-500"></i> {note.noteHeading}</h1>
 
                                         <hr className="border border-gray-200 my-2" />
 
-                                        <p className="text-sm text-gray-700 text-justify limitPara">{note.note_content}</p>
+                                        <p className="text-sm text-gray-700 text-justify limitPara">{note.noteContent}</p>
 
                                         <p className="text-[10px] text-gray-500 text-right mt-2 mb-1" >{note.date}</p>
 
