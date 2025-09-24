@@ -59,7 +59,7 @@ export function ViewNotes() {
                 {/* For SIdebar */}
 
                 <div className=" border-blue-800 h-screen">
-                    <Sidebar />
+                    <Sidebar val={3} />
                 </div>
 
                 <div className=" border-blue-700 flex-auto">
@@ -82,7 +82,7 @@ export function ViewNotes() {
 
                     <div className=" h-[calc(100%-70px)] bg-white  p-2 overflow-y-auto flex flex-col items-center">
                         <input type="text" onChange={(e) => SetTitle(e.currentTarget.value)} className="border outline-gray-300 border-gray-300 border-l-0 border-r-0 mt-2 w-[95%] md:w-full p-3 text-lg" name="" value={note.noteHeading} id="" placeholder="Enter Title" />
-                        <pre className="m-3 text-md">{note.noteContent}</pre>
+                        <pre className=" text-xs whitespace-pre-wrap break-words w-70 md:w-[100%]">{note.noteContent}</pre>
                     </div>
 
                 </div>

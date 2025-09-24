@@ -40,7 +40,7 @@ export function CreateNotes() {
             {/* For SIdebar */}
 
             <div className=" border-blue-800 h-screen">
-                <Sidebar />
+                <Sidebar  val={2} />
             </div>
 
             <div className=" border-blue-700 flex-auto">

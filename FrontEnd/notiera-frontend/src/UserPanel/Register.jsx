@@ -10,25 +10,53 @@ export function Register() {
     const [username, Setusername] = useState('');
     const [password, Setpassword] = useState('');
     const [email, Setemail] = useState('');
+    const [IsEmail, SetIsEmail] = useState(true);
     const [mobile, Setmobile] = useState('');
-    const [response,SetResponse] = useState('')
+    const [IsMobile, SetIsMobile] = useState(true);
 
-    const register = async() =>{
-        const res = await axios.post("http://localhost:8080/register",{
-            fullname,username,password,email,mobile
+    const [response, SetResponse] = useState('')
+
+    const register = async () => {
+        const res = await axios.post("http://localhost:8080/register", {
+            fullname, username, password, email, mobile
         });
 
-        if (res.status == 201){
+        if (res.status == 201) {
             SetResponse(res.data.msg);
-        }else if(res.status == 202){
+        } else if (res.status == 202) {
             SetResponse(res.data.msg);
         }
 
-    } 
+    }
+
+    const validateEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
+
+    const handleEmail = (e) => {
+        Setemail(e.target.value)
+        if (validateEmail(e.target.value)) {
+            SetIsEmail(true)
+        } else {
+            SetIsEmail(false)
+        }
+    };
+
+    const handleMobile = (e) => {
+        Setmobile(e.target.value);
+        const mobile = e.target.value;
+        console.log(!isNaN(mobile))
+        if (mobile.length != 10 && !isNaN(parseInt(mobile))) {
+            SetIsMobile(false)
+        } else {
+            SetIsMobile(true)
+        }
+    }
 
     return (
         <>
-        
+
             <div className="border gradientBg h-screen sm:h-screen   mx-auto flex flex-wrap flex-col justify-start sm:justify-center items-center">
 
                 <div className="container border  bg-white rounded md:p-5 rounded-md border h-screen sm:h-fit border-gray-800 customShadow1 max-w-[500px]  p-3">
@@ -36,24 +64,24 @@ export function Register() {
                     <h1 className="text-3xl m-3  font-bold">Register</h1>
                     <img className="w-[100px] mb-4  mx-auto" src="notieraLogoBG1.png" alt="" />
                     <label className="text-xs" htmlFor="">Full Name</label><br />
-                    <input onChange={(e)=>Setfullname(e.target.value)} type="text" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2 rounded-md border-gray-400" />
+                    <input onChange={(e) => Setfullname(e.target.value)} type="text" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2 rounded-md border-gray-400" />
                     <br />
-                    <label className="text-xs"  htmlFor="" >Username</label><br />
-                    <input  onChange={(e)=>Setusername(e.target.value)}   type="text" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <label className="text-xs" htmlFor="" >Username</label><br />
+                    <input onChange={(e) => Setusername(e.target.value)} type="text" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
                     <br />
-                    <label className="text-xs"  htmlFor="">Password</label><br />
-                    <input  onChange={(e)=>Setpassword(e.target.value)}  type="password" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <label className="text-xs" htmlFor="">Password</label><br />
+                    <input onChange={(e) => Setpassword(e.target.value)} type="password" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
                     <br />
-                    <label className="text-xs"  htmlFor="">Email</label><br />
-                    <input  onChange={(e)=>Setemail(e.target.value)}  type="email" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <label className="text-xs" htmlFor="">Email</label><br />
+                    <input onChange={handleEmail} type="email" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
 
                     <br />
-                    <label className="text-xs"  htmlFor="">Mobile Number</label><br />
-                    <input  onChange={(e)=>Setmobile(e.target.value)}  type="number" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <label className="text-xs" htmlFor="">Mobile Number</label><br />
+                    <input onChange={handleMobile} type="number" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
                     <br />
-                    <button onClick={register} className="m-2 bg-white border border-gray-800 p-3 w-[150px] cursor-pointer hover:bg-gray-400 active:bg-gray-800 active:text-white" >Register</button><br />
+                    <button onClick={register} className="m-2 bg-white border border-gray-400 p-3 w-[150px] cursor-pointer hover:bg-green-300 hover:border-green-300 active:bg-gray-800 active:text-white" >Register</button><br />
 
-                    <button onClick={()=>navigate('/')} className="text-sm my-2 text-blue-800 underline hover:text-blue-400 cursor-pointer ">Already Registered? Click Here to Login</button>
+                    <button onClick={() => navigate('/')} className="text-sm my-2 text-blue-800 underline hover:text-blue-400 cursor-pointer ">Already Registered? Click Here to Login</button>
 
 
 

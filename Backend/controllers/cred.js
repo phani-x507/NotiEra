@@ -3,6 +3,7 @@ import user from "../config/userSchema.js"
 import bcrypt, { hash } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { userData } from "../data/userData.js";
 dotenv.config();
 
 
@@ -53,4 +54,32 @@ export const verifyLogin = async(req,res) => {
         res.status(500).json({msg:'Internal Server Error'});
     }
 
+}
+
+export const getUserDetails = async(req,res) =>{ 
+
+    try{
+        const userDetails = await user.find({username:req.uname});
+        return res.status(200).json({data:userDetails[0]});
+    }catch(err){
+        return res.status(500);
+
+    }
+    
+}
+
+export const updateUserDetails = async(req,res) =>{
+    const {fullname,email,mobile,password} = req.body;
+    try{
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await user.findOneAndUpdate({username:req.uname},{$set:{fullname:fullname,email:email,mobile:mobile,password:hashedPassword}});
+        return res.status(200).json({msg:'User Details Updated Successfully'});
+    }catch(err){
+        return res.status(500);
+    }
+}
+
+export const logout = (req,res) =>{
+    res.clearCookie('token');
+    return res.status(200).json({msg:'Logged Out Successfully'});
 }
