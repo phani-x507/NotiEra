@@ -1,27 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Register } from "./Register";
+import axios from "axios";
+
 
 
 export function Login() {
+    const [username,Setusername] = useState('');
+    const [password,Setpassword] = useState('');
     const navigate = useNavigate();
+
+
+    const handleLogin = async() =>{
+        try{
+            const res = await axios.post("http://localhost:8080/login",{
+                username,password
+            });
+
+            if(res.status == 200){
+                localStorage.setItem('token',res.data.token);
+                navigate('/dashboard');
+            }
+
+        }catch(error){
+
+        }
+        
+    }
+
 
     return (
         <>
             <div className="border gradientBg h-screen   mx-auto flex flex-wrap flex-col justify-start sm:justify-center items-center">
 
-                <div className="container bg-white rounded rounded-md border h-screen sm:h-auto border-gray-200 customShadow1 max-w-[500px]   sm:h-auto p-3">
+                <div className="container bg-white rounded rounded-md border h-screen sm:h-auto border-gray-200 customShadow1 max-w-[500px] sm:w-fit  sm:h-auto p-3">
                     <h1 className="text-3xl m-3  font-bold">Login</h1>
-                    <img className="w-[200px] mb-4  mx-auto" src="notieraLogoBG.png" alt="" />
+                    <img className="w-[100px] mb-4  mx-auto" src="notieraLogoBG1.png" alt="" />
 
-                    <label className="text-gray-800 font-sem text-md " htmlFor="username">Username </label>
-                    <input type="email" name="username" className="border border-gray-400 w-full outline-gray-200 rounded rounded-md p-2 my-1" id="" />
-
-                    <label className="text-gray-800  text-md" htmlFor="username">Password </label>
-
-                    <input type="password" name="username" className="border border-gray-400 outline-gray-200  w-full rounded rounded-md p-2 my-1" id="" />
-
-                    <button className="m-2 bg-white border border-gray-800 p-3 w-[150px] cursor-pointer hover:bg-gray-200 active:bg-gray-800 active:text-white" >Login</button><br />
+                    <label className="text-xs"  htmlFor="" >Username</label><br />
+                    <input  onChange={(e)=>Setusername(e.target.value)}   type="text" className="border mb-1 w-[300px] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <br />
+                    <label className="text-xs"  htmlFor="">Password</label><br />
+                    <input  onChange={(e)=>Setpassword(e.target.value)}  type="password" className="border mb-1 w-[300px] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <br />
+                    <button onClick={handleLogin} className="m-2 bg-white border border-gray-800 p-3 w-[150px] cursor-pointer hover:bg-gray-200 active:bg-gray-800 active:text-white" >Login</button><br />
 
                     <button onClick={()=>navigate('/register')} className="text-sm my-2 text-blue-800 underline hover:text-blue-400 cursor-pointer ">Not Registered Yet? Click Here</button>
 

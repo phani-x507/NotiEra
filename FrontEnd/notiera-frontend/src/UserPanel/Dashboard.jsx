@@ -1,11 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NotesData } from "../TestDB/NotesData";
 import { Sidebar } from "./Sidebar";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function Dashboard() {
     const [SearchText, SetText] = useState('');
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    console.log(token); //Debug
+
+    useEffect(() => {
+        const getNotes = async () => {
+
+            const res = await axios.get("http://localhost:8080/getNotes", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+
+            if (res.status == 200) {
+                console.log('Auth Is Successful');
+            }
+
+        }
+        getNotes()
+
+
+    }, [])
+
+
+
+
 
     const SearchedNotes = NotesData.filter((Note) => Note.note_heading.toLowerCase().includes(SearchText.toLowerCase()) || Note.note_content.toLowerCase().includes(SearchText.toLowerCase()));
 
@@ -35,7 +61,7 @@ export function Dashboard() {
 
                             {SearchedNotes.map((note, index) => {
                                 return (
-                                    <button onClick={() => navigate('/view',{state:{id:note.id}})} className="container min-h-[200px] sm:w-[250px] text-left cursor-pointer border border-gray-100 bg-white rounded rounded-xl w-fit p-3 m-1">
+                                    <button onClick={() => navigate('/view', { state: { id: note.id } })} className="container min-h-[200px] sm:w-[250px] text-left cursor-pointer border border-gray-100 bg-white rounded rounded-xl w-fit p-3 m-1">
                                         <h1 className="limitHeading"><i class="bi bi-sticky-fill text-blue-500"></i> {note.note_heading}</h1>
 
                                         <hr className="border border-gray-200 my-2" />

@@ -5,13 +5,18 @@
   "description": "Notiera - new era of Note Taking",
   "main": "server.js",
   "scripts": {
-    "dev" :"node server",
-    "start" : "node --watch server",
+    "dev": "node server",
+    "start": "node --watch server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Revenger_X507",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.2"
   }
 }
