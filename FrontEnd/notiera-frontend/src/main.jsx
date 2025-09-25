@@ -9,6 +9,7 @@ import { ViewNotes } from './UserPanel/ViewNotes.jsx';
 import { Profile } from './UserPanel/Profile.jsx';
 import { Register } from './UserPanel/Register.jsx';
 import { EditNotes } from './UserPanel/EditNotes.jsx';
+import { NotFound } from './UserPanel/NotFound.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')).render(
       <Route path='/view' element={<ViewNotes />} />
       <Route path='/edit' element={<EditNotes />} />
       <Route path='/profile' element={<Profile />} />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   </BrowserRouter>
 )

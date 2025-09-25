@@ -68,18 +68,7 @@ export function Profile() {
 
 
     }
-    const validateUsername = (e) => {
-        const value = e.target.value;
-        SetUsername(value);
-      
-        const regex = /^[a-zA-Z0-9]*$/;
 
-        if (regex.test(value)) {
-            SetIsUsernameValid(true);  
-        } else {
-            SetIsUsernameValid(false); 
-        }
-    };
 
     const validateEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

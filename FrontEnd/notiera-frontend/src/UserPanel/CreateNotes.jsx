@@ -14,6 +14,7 @@ export function CreateNotes() {
     const navigate = useNavigate();
 
     const sendNote = async () => {
+        try{
         const token = localStorage.getItem('token');
         const res = await axios.post("http://localhost:8080/createNote", 
             {noteHeading,noteContent},
@@ -25,8 +26,11 @@ export function CreateNotes() {
         if(res.status == 200){
             SetResponse('Saved Successfully');
             SetIsOpen(true);
-        }else{
-            console.log('Error Occured');
+        }
+        }catch(error){
+            if(error.status == 500){
+                navigate('/');
+            }
         }
 
 

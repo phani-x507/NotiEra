@@ -8,15 +8,18 @@ export function Register() {
     const navigate = useNavigate();
     const [fullname, Setfullname] = useState('');
     const [username, Setusername] = useState('');
+    const [IsUsernameValid,SetIsUsernameValid] = useState(false);
     const [password, Setpassword] = useState('');
+    const [IsPassword, SetIsPassword] = useState(false);
     const [email, Setemail] = useState('');
-    const [IsEmail, SetIsEmail] = useState(true);
+    const [IsEmail, SetIsEmail] = useState(false);
     const [mobile, Setmobile] = useState('');
-    const [IsMobile, SetIsMobile] = useState(true);
+    const [IsMobile, SetIsMobile] = useState(false);
 
     const [response, SetResponse] = useState('')
 
     const register = async () => {
+        if(IsUsernameValid && IsEmail && IsMobile){
         const res = await axios.post("http://localhost:8080/register", {
             fullname, username, password, email, mobile
         });
@@ -27,6 +30,27 @@ export function Register() {
             SetResponse(res.data.msg);
         }
 
+    }
+    }
+
+    const validateUsername = (e) => {
+        const value = e.target.value;
+        Setusername(value);
+        if(value.indexOf(' ') != -1 || value.length<8){
+            SetIsUsernameValid(false)
+        }else{
+            SetIsUsernameValid(true)
+        }
+    }
+
+        const validatePassword = (e) => {
+        const value = e.target.value;
+        Setpassword(value);
+        if(value.length<8){
+            SetIsPassword(false)
+        }else{
+            SetIsPassword(true)
+        }
     }
 
     const validateEmail = (email) => {
@@ -67,17 +91,20 @@ export function Register() {
                     <input onChange={(e) => Setfullname(e.target.value)} type="text" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2 rounded-md border-gray-400" />
                     <br />
                     <label className="text-xs" htmlFor="" >Username</label><br />
-                    <input onChange={(e) => Setusername(e.target.value)} type="text" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
-                    <br />
+                    <input onChange={validateUsername} type="text" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+
+                     <p className={`text-[10px] ${IsUsernameValid ? 'text-green-800' : 'text-red-800'}`}>{IsUsernameValid ? 'Valid Username' : 'Username should have Atleast 8 letters and no Spaces'}</p>
                     <label className="text-xs" htmlFor="">Password</label><br />
-                    <input onChange={(e) => Setpassword(e.target.value)} type="password" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
-                    <br />
+                    <input onChange={validatePassword} type="password" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <p className={`text-[10px] ${IsPassword ? 'text-green-800' : 'text-red-800'}`}>{IsPassword ? 'Valid Password' : 'Password Should have atleast 8 Characters'}</p>
+
                     <label className="text-xs" htmlFor="">Email</label><br />
                     <input onChange={handleEmail} type="email" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <p className={`text-[10px] ${IsEmail ? 'text-green-800' : 'text-red-800'}`}>{IsEmail ? 'Valid Email' : 'Email should consist @domain.com'}</p>
 
-                    <br />
                     <label className="text-xs" htmlFor="">Mobile Number</label><br />
                     <input onChange={handleMobile} type="number" className="border mb-1 w-[90%] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <p className={`text-[10px] ${IsMobile ? 'text-green-800' : 'text-red-800'}`}>{IsMobile ? 'Valid Number' : 'Mobile must consits of 10 digits only Numbers'}</p>
                     <br />
                     <button onClick={register} className="m-2 bg-white border border-gray-400 p-3 w-[150px] cursor-pointer hover:bg-green-300 hover:border-green-300 active:bg-gray-800 active:text-white" >Register</button><br />
 

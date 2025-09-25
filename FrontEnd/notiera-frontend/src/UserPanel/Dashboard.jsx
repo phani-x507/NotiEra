@@ -8,32 +8,40 @@ export function Dashboard() {
     const [SearchText, SetText] = useState('');
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    const [notesData,SetnotesData] = useState([]);
-    const [usersData,SetusersData] = useState([]);
+    const [notesData, SetnotesData] = useState([]);
+    const [usersData, SetusersData] = useState([]);
     // console.log(token); //Debug
 
     useEffect(() => {
         const getNotes = async () => {
 
-            const res = await axios.get("http://localhost:8080/getNotes", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            try {
+                const res = await axios.get("http://localhost:8080/getNotes", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
+                if (res.status == 200) {
+                    const data = res.data.notesData;
+                    SetnotesData(data);
                 }
-            })
+            }catch(error){
+                if(error.status == 500){
+                    navigate('/')
+                }
 
-            if (res.status == 200) {
-                const data=res.data.notesData;
-                SetnotesData(data);
             }
+          
+          
 
         }
         getNotes()
 
-        const getDetails = async() =>{
+        const getDetails = async () => {
             const token = localStorage.getItem('token');
             const res = await axios.get('http://localhost:8080/userDetails',
                 {
-                    headers:{
+                    headers: {
                         Authorization: `Bearer ${token}`
                     }
                 })
@@ -71,23 +79,23 @@ export function Dashboard() {
                         </div>
                         <div className="  p-3 mt-2 h-[calc(100%-78px)]  overflow-y-auto">
                             <div className="">
-                            <h2 className="font-semibold " >Welcome</h2>
-                            <h3 className="text-gray-800 lg:text-2xl text-green-800 my-2 font-bold sm:text-xl sm:font-bold  xl:text-3xl">{usersData.fullname} </h3>
+                                <h2 className="font-semibold " >Welcome</h2>
+                                <h3 className="text-gray-800 lg:text-2xl text-green-800 my-2 font-bold sm:text-xl sm:font-bold  xl:text-3xl">{usersData.fullname} </h3>
                             </div>
                             <h1 className="text-xl text-gray-700 "> Notes</h1>
 
                             <hr className="border border-gray-300 mt-3" />
-                            
+
                             {/* Notes Starts Here */}
 
                             {SearchedNotes.map((note, index) => {
                                 return (
-                                    <button onClick={() => navigate('/view', { state: { noteId: note.noteId} })} className="container min-h-[200px] sm:w-[250px] text-left cursor-pointer border border-gray-100 bg-white rounded rounded-xl w-fit p-3 m-1">
+                                    <button onClick={() => navigate('/view', { state: { noteId: note.noteId } })} className="container min-h-[200px] sm:w-[250px] text-left cursor-pointer border border-gray-100 bg-white rounded rounded-xl w-fit p-3 m-1">
                                         <h1 className="limitHeading"><i class="bi bi-sticky-fill text-blue-500"></i> {note.noteHeading}</h1>
 
                                         <hr className="border border-gray-200 my-2" />
 
-                                        <p className="text-xs text-gray-700 text-justify limitPara">{note.noteContent.slice(0,150)}</p>
+                                        <p className="text-xs text-gray-700 text-justify limitPara">{note.noteContent.slice(0, 150)}</p>
 
                                         <p className="text-[10px] text-gray-500 text-right mt-2 mb-1" >{note.date}</p>
 

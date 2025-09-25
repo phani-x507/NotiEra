@@ -11,8 +11,8 @@ pre {
 }
 
 .gradientBg {
-  background: #d1cfcf;
-  background: linear-gradient(90deg, rgba(209, 207, 207, 1) 0%, rgba(242, 240, 240, 1) 50%, rgba(255, 255, 255, 1) 100%);
+  bbackground: #e8ffea;
+background: linear-gradient(90deg, rgba(232, 255, 234, 1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
 .customShadow1 {

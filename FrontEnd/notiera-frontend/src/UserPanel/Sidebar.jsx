@@ -8,17 +8,36 @@ export function Sidebar({ val }) {
     const [logoutRes, SetLogoutRes] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
+
         const getDetails = async () => {
-            const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:8080/userDetails',
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-            SetUserData(res.data.data)
+
+            try {
+                const token = localStorage.getItem('token');
+                const res = await axios.get('http://localhost:8080/userDetails',
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+
+                SetUserData(res.data.data)
+            }catch(error){
+                console.log(error)
+                if(error.status == 500){
+                    navigate('/')
+                }
+            }
+            
+
+
+
         }
+
         getDetails();
+
+
+
+
     }, [])
 
     const logout = async () => {

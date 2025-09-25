@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { logger } from './middleware/logger.js';
 import connectDb from './config/connect.js';
-import { ErrorHandler } from './ErrorHandler/MainErrorHandler.js';
+import { errorHandler, errors } from './ErrorHandler/MainErrorHandler.js';
 
 const app = express();
 app.use(express.json());
@@ -17,6 +17,10 @@ dotenv.config();
 
 
 app.use(router);
+
+
+app.use(errorHandler)
+app.use(errors);
 
 app.listen(process.env.PORT,()=>{
     console.log(`Running on port ${process.env.PORT}`);

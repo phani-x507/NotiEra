@@ -9,7 +9,8 @@ const verifyUser = (req, res, next) => {
         req.uname = jwtDecode.uname;
         next()
     }catch(err){
-        return res.status(400).json({msg:'Authentication Failed'});
+        throw new Error('Unauthorised User');
+        
     }
 }
 

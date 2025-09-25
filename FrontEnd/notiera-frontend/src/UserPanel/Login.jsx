@@ -23,8 +23,11 @@ export function Login() {
             }
 
         }catch(error){
+                if(error.status == 500){
+                    navigate('/')
+                }
 
-        }
+            }
         
     }
 
@@ -37,13 +40,15 @@ export function Login() {
                     <h1 className="text-3xl m-3  font-bold">Login</h1>
                     <img className="w-[100px] mb-4  mx-auto" src="notieraLogoBG1.png" alt="" />
 
+                    <div className=" text-center">
                     <label className="text-xs"  htmlFor="" >Username</label><br />
-                    <input  onChange={(e)=>Setusername(e.target.value)}   type="text" className="border mb-1 w-[300px] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <input  onChange={(e)=>Setusername(e.target.value)}   type="text" className="border outline-green-300 mb-1 w-[300px] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
                     <br />
                     <label className="text-xs"  htmlFor="">Password</label><br />
-                    <input  onChange={(e)=>Setpassword(e.target.value)}  type="password" className="border mb-1 w-[300px] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
+                    <input  onChange={(e)=>Setpassword(e.target.value)}  type="password" className="border outline-green-300 mb-1 w-[300px] p-2 sm:text-xs sm:p-2  rounded-md border-gray-400" />
                     <br />
-                    <button onClick={handleLogin} className="m-2 bg-white border border-gray-800 p-3 w-[150px] cursor-pointer hover:bg-gray-200 active:bg-gray-800 active:text-white" >Login</button><br />
+                    <button onClick={handleLogin} className="m-2 bg-green-300    p-3 w-[150px] cursor-pointer hover:bg-green-500 active:bg-gray-800 active:text-white" >Login</button><br />
+                    </div>
 
                     <button onClick={()=>navigate('/register')} className="text-sm my-2 text-blue-800 underline hover:text-blue-400 cursor-pointer ">Not Registered Yet? Click Here</button>
 
