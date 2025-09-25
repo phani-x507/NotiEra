@@ -1,0 +1,185 @@
+{
+  "info": {
+    "_postman_id": "notiera-collection-2025",
+    "name": "NotiEra API Collection",
+    "description": "Postman collection for all NotiEra API endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullname\": \"Test User\",\n  \"username\": \"testuser\",\n  \"password\": \"password123\",\n  \"email\": \"test@example.com\",\n  \"mobile\": \"1234567890\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/register",
+          "host": ["{{base_url}}"],
+          "path": ["register"]
+        }
+      }
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/login",
+          "host": ["{{base_url}}"],
+          "path": ["login"]
+        }
+      }
+    },
+    {
+      "name": "Get All Notes",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/getNotes",
+          "host": ["{{base_url}}"],
+          "path": ["getNotes"]
+        }
+      }
+    },
+    {
+      "name": "Create Note",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"noteHeading\": \"Sample Note\",\n  \"noteContent\": \"This is a note.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/createNote",
+          "host": ["{{base_url}}"],
+          "path": ["createNote"]
+        }
+      }
+    },
+    {
+      "name": "Get Note By ID",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"noteId\": 123456\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/getNoteByID",
+          "host": ["{{base_url}}"],
+          "path": ["getNoteByID"]
+        }
+      }
+    },
+    {
+      "name": "Update Note",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"noteId\": 123456,\n  \"noteHeading\": \"Updated Note\",\n  \"noteContent\": \"Updated content.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/updateNote",
+          "host": ["{{base_url}}"],
+          "path": ["updateNote"]
+        }
+      }
+    },
+    {
+      "name": "Delete Note",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"noteId\": 123456\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/deleteNote",
+          "host": ["{{base_url}}"],
+          "path": ["deleteNote"]
+        }
+      }
+    },
+    {
+      "name": "Get User Details",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/userDetails",
+          "host": ["{{base_url}}"],
+          "path": ["userDetails"]
+        }
+      }
+    },
+    {
+      "name": "Update User Details",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullname\": \"Updated Name\",\n  \"email\": \"updated@example.com\",\n  \"mobile\": \"9876543210\",\n  \"password\": \"newpassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/updateUser",
+          "host": ["{{base_url}}"],
+          "path": ["updateUser"]
+        }
+      }
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/logout",
+          "host": ["{{base_url}}"],
+          "path": ["logout"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000" },
+    { "key": "token", "value": "" }
+  ]
+}
